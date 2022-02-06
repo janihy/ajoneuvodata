@@ -16,7 +16,7 @@ def index():
         "kayttoonottopvm": data.get("kayttoonottopvm"),
         "omamassa": data.get("omamassa"),
     }
-    with closing(sqlite3.connect('ajoneuvorekisteri.sqlite')) as conn:
+    with closing(sqlite3.connect('ajoneuvodata.sqlite')) as conn:
         conn.row_factory = sqlite3.Row
         rows = conn.execute("""
             SELECT * FROM tieliikenne WHERE

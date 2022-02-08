@@ -19,7 +19,11 @@ def index():
     with closing(sqlite3.connect('ajoneuvodata.sqlite')) as conn:
         conn.row_factory = sqlite3.Row
         rows = conn.execute("""
-            SELECT * FROM tieliikenne WHERE
+            SELECT * FROM tieliikenne
+            NATURAL JOIN kunta
+            NATURAL JOIN vari
+            NATURAL JOIN ajoneuvonkaytto
+            NATURAL JOIN vaihteisto WHERE
             valmistenumero2 = :vin AND
             kayttoonottopvm = :kayttoonottopvm AND
             omamassa = :omamassa

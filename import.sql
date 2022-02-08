@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS vari(
-  id TEXT PRIMARY KEY,
-  fi TEXT,
-  sv TEXT,
-  en TEXT);
+  vari_id TEXT PRIMARY KEY,
+  vari_fi TEXT,
+  vari_sv TEXT,
+  vari_en TEXT);
 
-INSERT INTO vari (id, fi, sv, en)
+INSERT INTO vari (vari_id, vari_fi, vari_sv, vari_en)
 VALUES
   ('0', 'Musta', 'Svart', 'Black'),
   ('1', 'Ruskea (beige)', 'Brun (beige)', 'Brown (beige)'),
@@ -21,12 +21,12 @@ VALUES
   ('Z', 'Turkoosi', 'Turkos', 'Turquoise');
 
 CREATE TABLE IF NOT EXISTS ajoneuvonkaytto (
-  id TEXT PRIMARY KEY,
-  fi TEXT,
-  sv TEXT,
-  en TEXT);
+  ajoneuvonkaytto_id TEXT PRIMARY KEY,
+  ajoneuvonkaytto_fi TEXT,
+  ajoneuvonkaytto_sv TEXT,
+  ajoneuvonkaytto_en TEXT);
 
-INSERT INTO ajoneuvonkaytto (id, fi, sv, en)
+INSERT INTO ajoneuvonkaytto (ajoneuvonkaytto_id, ajoneuvonkaytto_fi, ajoneuvonkaytto_sv, ajoneuvonkaytto_en)
 VALUES
 ('01', 'Yksityinen', 'Privat', 'Private'),
 ('02', 'Luvanvarainen', 'Tillståndspliktig', 'Subject to permit'),
@@ -36,13 +36,14 @@ VALUES
 ('06', 'Luvanvarainen tavaraliikenne', 'Tillståndspliktig godstrafik', '');
 
 CREATE TABLE IF NOT EXISTS vaihteisto (
-  id TEXT PRIMARY KEY,
-  fi TEXT,
-  sv TEXT,
-  en TEXT);
+  vaihteisto_id TEXT PRIMARY KEY,
+  vaihteisto_fi TEXT,
+  vaihteisto_sv TEXT,
+  vaihteisto_en TEXT);
 
-INSERT INTO vaihteisto(id, fi, sv, en)
+INSERT INTO vaihteisto(vaihteisto_id, vaihteisto_fi, vaihteisto_sv, vaihteisto_en)
 VALUES
+('', 'Ei tietoa', '', 'Unknown'),
 ('1', 'Käsivalintainen', 'Manuell', 'Manual'),
 ('2', 'Automaattinen', 'Automatisk', 'Automatic'),
 ('3', 'Portaaton', 'Steglös', 'Stepless'),
@@ -54,13 +55,12 @@ VALUES
 ('Y', 'Muu', 'Annan', 'Other');
 
 CREATE TABLE IF NOT EXISTS kunta(
-  id TEXT PRIMARY KEY,
-  fi TEXT,
-  sv TEXT,
-  en TEXT);
+  kunta_id TEXT PRIMARY KEY,
+  kunta_fi TEXT,
+  kunta_sv TEXT,
+  kunta_en TEXT);
 
-
-INSERT INTO kunta(id, fi, sv, en)
+INSERT INTO kunta(kunta_id, kunta_fi, kunta_sv, kunta_en)
 VALUES
 ('005', 'Alajärvi', 'Alajärvi', 'Alajärvi'),
 ('009', 'Alavieska', 'Alavieska', 'Alavieska'),
@@ -379,17 +379,15 @@ VALUES
 ('992', 'Äänekoski', 'Äänekoski', 'Äänekoski'),
 ('999', 'Ei vak asuinkuntaa', 'Ej stadigvarande hemkommun', 'Ei vak asuinkuntaa');
 
-
-
 CREATE TABLE IF NOT EXISTS "tieliikenne"(
   "ajoneuvoluokka" TEXT,
   "ensirekisterointipvm" TEXT,
   "ajoneuvoryhma" TEXT,
-  "ajoneuvonkaytto" TEXT,
+  "ajoneuvonkaytto_id" TEXT,
   "variantti" TEXT,
   "versio" TEXT,
   "kayttoonottopvm" TEXT,
-  "vari" TEXT,
+  "vari_id" TEXT,
   "ovienLukumaara" INTEGER,
   "korityyppi" TEXT,
   "ohjaamotyyppi" TEXT,
@@ -409,13 +407,13 @@ CREATE TABLE IF NOT EXISTS "tieliikenne"(
   "sahkohybridinluokka" TEXT,
   "merkkiSelvakielinen" TEXT,
   "mallimerkinta" TEXT,
-  "vaihteisto" TEXT,
+  "vaihteisto_id" TEXT,
   "vaihteidenLkm" INTEGER,
   "kaupallinenNimi" TEXT,
   "voimanvalJaTehostamistapa" TEXT,
   "tyyppihyvaksyntanro" TEXT,
   "yksittaisKayttovoima" TEXT,
-  "kunta" INTEGER,
+  "kunta_id" INTEGER,
   "Co2" INTEGER,
   "matkamittarilukema" INTEGER,
   "valmistenumero2" TEXT,

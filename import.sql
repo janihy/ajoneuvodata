@@ -421,4 +421,4 @@ CREATE TABLE IF NOT EXISTS "tieliikenne"(
 );
 
 .separator ;
-.import TieliikenneAvoinData_5_15.csv tieliikenne
+.import TieliikenneAvoinData_5_18.csv tieliikenne

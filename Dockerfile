@@ -12,8 +12,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN wget https://opendata.traficom.fi/Content/Ajoneuvorekisteri.zip
 RUN unzip Ajoneuvorekisteri.zip && rm Ajoneuvorekisteri.zip
+RUN mv -v *.csv avoindata.csv
 COPY import.sql import.sql
-RUN sqlite3 ajoneuvodata.sqlite < import.sql && rm TieliikenneAvoinData_5_18.csv
+RUN sqlite3 ajoneuvodata.sqlite < import.sql && rm avoindata.csv
 
 COPY . .
 

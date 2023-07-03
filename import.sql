@@ -414,11 +414,14 @@ CREATE TABLE IF NOT EXISTS "tieliikenne"(
   "tyyppihyvaksyntanro" TEXT,
   "yksittaisKayttovoima" TEXT,
   "kunta_id" INTEGER,
-  "Co2" INTEGER,
+  "NEDC_Co2" INTEGER,
+  "NEDC2_Co2" INTEGER,
+  "WLTP_Co2" INTEGER,
+  "WLTP2_Co2" INTEGER,
   "matkamittarilukema" INTEGER,
   "valmistenumero2" TEXT,
   "jarnro" INTEGER
 );
 
 .separator ;
-.import TieliikenneAvoinData_5_18.csv tieliikenne
+.import avoindata.csv tieliikenne

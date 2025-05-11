@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import sqlite3
 from contextlib import closing
 from flask import Flask, jsonify, request
@@ -16,7 +15,7 @@ def index():
         "kayttoonottopvm": data.get("kayttoonottopvm"),
         "omamassa": data.get("omamassa"),
     }
-    with closing(sqlite3.connect('ajoneuvodata.sqlite')) as conn:
+    with closing(sqlite3.connect('/app/ajoneuvodata.sqlite')) as conn:
         conn.row_factory = sqlite3.Row
         rows = conn.execute("""
             SELECT * FROM tieliikenne

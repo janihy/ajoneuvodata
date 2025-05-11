@@ -12,17 +12,16 @@ ADD init_database.sh schema.sql /app/
 RUN /bin/sh init_database.sh
 
 
-FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-alpine${ALPINE_VERSION} AS builder
+FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION} AS builder
+COPY --from=ghcr.io/astral-sh/uv:0.7.3 /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 ENV UV_PYTHON_DOWNLOADS=0
 
 WORKDIR /app
+ADD . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=/app/uv.lock \
     --mount=type=bind,source=pyproject.toml,target=/app/pyproject.toml \
-    uv sync --frozen --no-install-project --no-dev
-ADD . /app
-RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-editable
 
 

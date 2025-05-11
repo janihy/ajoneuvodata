@@ -2,7 +2,6 @@
 FROM python:3.13-slim AS database
 RUN apt-get update && apt-get install -y sqlite3 wget unzip
 WORKDIR /app
-ADD Ajoneuvorekisteri.zip /app/
 ADD init_database.sh schema.sql /app/
 RUN ./init_database.sh
 

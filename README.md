@@ -1,11 +1,11 @@
 # What this is
-This is a silly proof of concept "API" for searching specific cars from [Traficom Avoin data](https://www.traficom.fi/fi/ajankohtaista/avoin-data). The data is provided as a csv with 5308037 rows so it's not fun to parse by hand. The VINs have been redacted but if you know enough of the car identity already, you might be able to find the correct one.
+This is a silly proof of concept "API" for searching specific cars from [Traficom Avoin data](https://www.traficom.fi/fi/ajankohtaista/avoin-data). The data is provided as a csv with 5 million rows so it's not fun to parse by hand. The VINs have been redacted but if you know enough of the car identity already, you might be able to find the correct one.
 
 # How do I run it
-Build the container as specified in the Dockerfile and run:
+Build will take a while as there is some data to import. Use the following to build and run:
 ```
-$ podman build -t ajoneuvodata .
-$ podman run -p8000:8000/tcp -it localhost/ajoneuvodata
+$ podman build -t ajoneuvodata https://github.com/janihy/ajoneuvodata.git
+$ podman run -p127.0.0.1:8000:8000/tcp --rm --name ajoneuvodata -it ajoneuvodata
 ```
 
 # How do I use it

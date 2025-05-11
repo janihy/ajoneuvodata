@@ -1,16 +1,18 @@
 # syntax=docker/dockerfile:1
 #
 ARG PYTHON_VERSION="3.13"
+ARG ALPINE_VERSION="3.21"
 
-FROM alpine:3.20 AS database
+FROM alpine:${ALPINE_VERSION} AS database
 RUN apk update && apk add --no-cache sqlite
 WORKDIR /app
 ADD https://opendata.traficom.fi/Content/Ajoneuvorekisteri.zip /app/
 ADD init_database.sh schema.sql /app/
+# TODO: this script isn't fully alpine-compatible
 RUN /bin/sh init_database.sh
 
 
-FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-bookworm-slim AS builder
+FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-alpine${ALPINE_VERSION} AS builder
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 ENV UV_PYTHON_DOWNLOADS=0
 
@@ -24,7 +26,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-editable
 
 
-FROM python:${PYTHON_VERSION}-alpine
+FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
 COPY --from=builder /app/.venv /app/.venv
 COPY --from=database /app/ajoneuvodata.sqlite /app/
 

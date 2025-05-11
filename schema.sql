@@ -422,6 +422,3 @@ CREATE TABLE IF NOT EXISTS "tieliikenne"(
   "valmistenumero2" TEXT,
   "jarnro" INTEGER
 );
-
-.separator ;
-.import avoindata.csv tieliikenne

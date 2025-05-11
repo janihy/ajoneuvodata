@@ -155,3 +155,4 @@ cython_debug/
 *.csv
 *.zip
 .venv
+.ruff_cache

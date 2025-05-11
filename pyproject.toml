@@ -1,0 +1,7 @@
+[project]
+name = "ajoneuvodata"
+version = "0.1.0"
+description = "A silly proof of concept for searching specific cars from Traficom Avoin data. "
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["flask>=3.1.0", "gunicorn>=23.0.0"]

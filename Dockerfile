@@ -1,12 +1,16 @@
 # syntax=docker/dockerfile:1
-FROM python:3.13-slim AS database
-RUN apt-get update && apt-get install -y sqlite3 wget unzip
+#
+ARG PYTHON_VERSION="3.13"
+
+FROM alpine:3.20 AS database
+RUN apk update && apk add --no-cache sqlite
 WORKDIR /app
+ADD https://opendata.traficom.fi/Content/Ajoneuvorekisteri.zip /app/
 ADD init_database.sh schema.sql /app/
-RUN ./init_database.sh
+RUN /bin/sh init_database.sh
 
 
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS builder
+FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-bookworm-slim AS builder
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 ENV UV_PYTHON_DOWNLOADS=0
 
@@ -20,7 +24,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-editable
 
 
-FROM python:3.13-slim
+FROM python:${PYTHON_VERSION}-alpine
 COPY --from=builder /app/.venv /app/.venv
 COPY --from=database /app/ajoneuvodata.sqlite /app/
 

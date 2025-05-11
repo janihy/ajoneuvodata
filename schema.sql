@@ -382,6 +382,7 @@ VALUES
 CREATE TABLE IF NOT EXISTS "tieliikenne"(
   "ajoneuvoluokka" TEXT,
   "ensirekisterointipvm" TEXT,
+  "ensirekisterointi_parsed" TEXT GENERATED ALWAYS AS (substr(ensirekisterointipvm,7,4) || '-' || substr(ensirekisterointipvm,4,2) || '-' || substr(ensirekisterointipvm,0,3)) VIRTUAL,
   "ajoneuvoryhma" TEXT,
   "ajoneuvonkaytto_id" TEXT,
   "variantti" TEXT,
@@ -422,3 +423,6 @@ CREATE TABLE IF NOT EXISTS "tieliikenne"(
   "valmistenumero2" TEXT,
   "jarnro" INTEGER
 );
+
+CREATE INDEX idx_search ON tieliikenne(valmistenumero2, kayttoonottopvm, omamassa);
+CREATE INDEX idx_stats ON tieliikenne(ensirekisterointi_parsed);

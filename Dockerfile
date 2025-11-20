@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 #
-ARG PYTHON_VERSION="3.13"
-ARG ALPINE_VERSION="3.21"
+ARG PYTHON_VERSION="3.14"
+ARG ALPINE_VERSION="3.22"
 
 FROM alpine:${ALPINE_VERSION} AS database
 RUN apk update && apk add --no-cache sqlite
@@ -12,8 +12,7 @@ ADD init_database.sh schema.sql /app/
 RUN /bin/sh init_database.sh
 
 
-FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION} AS builder
-COPY --from=ghcr.io/astral-sh/uv:0.7.3 /uv /uvx /bin/
+FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-alpine AS builder
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 ENV UV_PYTHON_DOWNLOADS=0
 

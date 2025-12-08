@@ -1,11 +1,11 @@
 import sqlite3
+import os
 from contextlib import closing
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-SQLITE_PATH = 'ajoneuvodata.sqlite'
-
+SQLITE_PATH = os.getenv("SQLITE_PATH", 'ajoneuvodata.sqlite')
 @app.route('/', methods=['POST'])
 def index():
     data = request.json

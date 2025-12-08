@@ -11,7 +11,6 @@ else
     unzip Ajoneuvorekisteri.zip
 fi
 
-echo "$NAME"
 # traficom seems to change the version number in the filename every now and then
 # so let's just rename any csv file (we expect to find only one) to avoindata.csv
 # it's a hack yes

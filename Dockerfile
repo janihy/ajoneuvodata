@@ -26,6 +26,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 
 FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+WORKDIR /app
 COPY --from=builder /app/.venv /app/.venv
 COPY --from=database /app/ajoneuvodata.sqlite /app/
 

@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
+SQLITE_PATH = 'ajoneuvodata.sqlite'
 
 @app.route('/', methods=['POST'])
 def index():
@@ -15,7 +16,7 @@ def index():
         "kayttoonottopvm": data.get("kayttoonottopvm"),
         "omamassa": data.get("omamassa"),
     }
-    with closing(sqlite3.connect('/app/ajoneuvodata.sqlite')) as conn:
+    with closing(sqlite3.connect(SQLITE_PATH)) as conn:
         conn.row_factory = sqlite3.Row
         rows = conn.execute("""
             SELECT * FROM tieliikenne
@@ -29,3 +30,12 @@ def index():
             LIMIT 10""", filters).fetchall()
     result = [dict(row) for row in rows]
     return jsonify(result)
+
+@app.route('/stats', methods=['GET'])
+def stats():
+    with closing(sqlite3.connect(SQLITE_PATH)) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute("""
+            SELECT * FROM ajoneuvodata_stats;
+            """).fetchall()
+    return jsonify(dict(rows[0]))

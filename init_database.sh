@@ -27,9 +27,13 @@ fi
 
 rm -f ajoneuvodata.sqlite
 echo "Creating database..."
-sqlite3 ajoneuvodata.sqlite < schema.sql
+sqlite3 ajoneuvodata.sqlite < sql/00-schema.sql
 echo "Importing data..."
-sqlite3 ajoneuvodata.sqlite '.separator ;' '.import -skip 1 avoindata.csv tieliikenne'
+sqlite3 ajoneuvodata.sqlite < sql/01-import-data.sql
+echo "Creating indexes..."
+sqlite3 ajoneuvodata.sqlite < sql/02-create-indexes.sql
 echo "ajoneuvodata.sqlite created successfully in $SECONDS seconds"
-echo "Cleaning up..."
-rm *.zip *.csv
+if [ -z "$SKIP_CLEANUP" ]; then
+    echo "Cleaning up..."
+    rm *.zip *.csv
+fi

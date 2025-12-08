@@ -7,9 +7,10 @@ FROM alpine:${ALPINE_VERSION} AS database
 RUN apk update && apk add --no-cache sqlite
 WORKDIR /app
 ADD https://opendata.traficom.fi/Content/Ajoneuvorekisteri.zip /app/
-ADD init_database.sh schema.sql /app/
 # TODO: this script isn't fully alpine-compatible
-RUN /bin/sh init_database.sh
+RUN --mount=type=bind,source=init_database.sh,target=/app/init_database.sh \
+    --mount=type=bind,source=sql,target=/app/sql \
+    /bin/sh init_database.sh
 
 
 FROM ghcr.io/astral-sh/uv:python${PYTHON_VERSION}-alpine AS builder
